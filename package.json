@@ -1,17 +1,19 @@
 {
-  "name": "Barber-Schedule",
+  "name": "barber-schedule",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/JoanPedro/Barber-Schedule.git",
   "author": "Joan Pedro Oliveira de Souza <jpos.senai@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "dev:debug": "nodemon --inspect src/server.js"
   },
   "dependencies": {
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "sucrase": "^3.14.0"
   }
 }

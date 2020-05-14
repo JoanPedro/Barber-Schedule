@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import User from './app/models/User';
 
-const routes = new Router();
+const routes = new Router(); // Cria uma nova instância de Router do Express.
 
 routes.get('/', async (req, res) => {
   const user = await User.create({

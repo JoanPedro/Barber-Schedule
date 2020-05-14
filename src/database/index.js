@@ -15,7 +15,8 @@ class Database {
     this.connection = new Sequelize(databaseConfig); // Cria a Conexão com o DB
 
     models.map((model) => model.init(this.connection));
+    // Mapeia os Modelos criados um a um com a conexão.
   }
 }
 
-export default new Database();
+export default new Database(); // Cria uma nova instância de Database()

@@ -18,4 +18,4 @@ class User extends Model {
   }
 }
 
-export default User;
+export default User; // Exporta a Classe User criada extendida do Model modelo.

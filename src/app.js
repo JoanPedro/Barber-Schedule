@@ -1,5 +1,5 @@
-import express from 'express' // Só é possível utilizar isso adicionando como
-import routes from './routes' // dependencias o sucrase. " Yarn add sucrase -D "
+import express from 'express'; // Só é possível utilizar isso adicionando como
+import routes from './routes'; // dependencias o sucrase. " Yarn add sucrase -D "
 // Deve-se criar o arquivo nodemon.js e configuralo para aceitar JS sucrase!
 
 // Configuração Inicial da Aplicação: Define os Middlewares e Rotas.
@@ -7,19 +7,19 @@ import routes from './routes' // dependencias o sucrase. " Yarn add sucrase -D "
 
 class App {
   constructor() {
-    this.server = express()
+    this.server = express();
 
-    this.middlewares()
-    this.routes()
+    this.middlewares();
+    this.routes();
   }
 
   middlewares() {
-    this.server.use(express.json()) // Habilita Requisição Body em JSON.
+    this.server.use(express.json()); // Habilita Requisição Body em JSON.
   }
 
   routes() {
-    this.server.use(routes)
+    this.server.use(routes);
   }
 }
 
-export default new App().server
+export default new App().server;

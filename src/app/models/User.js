@@ -28,6 +28,12 @@ class User extends Model {
 
     return this;
   }
+
+  checkPassword(password) {
+    return bcrypt.compare(password, this.password_hash);
+    /* password: Digitado e this.password_hash é a senha
+      já criptografada pelo cadastro */
+  }
 }
 
 export default User; // Exporta a Classe User criada extendida do Model modelo.

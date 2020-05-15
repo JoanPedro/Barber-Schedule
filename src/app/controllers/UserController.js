@@ -69,16 +69,19 @@ class UserController {
 
     const { email, oldPassword } = req.body;
 
+    // Cria um usuário a partir do model User.
+    // O usuário é encontrado a partir da sua Primary Key que é o userId.
     const user = await User.findByPk(req.userId);
 
-    // Verifica se o Email que está atualizando é igual ao anterior.
+    // Verifica se o Email que está sendo atualizado é diferente do anterior...
+    // O Usuário pode simplesmente digitar o mesmo email, sem sofre nenhum impacto.
     if (email !== user.email) {
-      // Verifica a existência do usuário pelo email, já que foi definido como único.
+      // Verifica a existência de um usuário pelo novo email solicitado pelo usuário.
       const userExists = await User.findOne({
         where: { email /* email: email */ },
       });
 
-      // Se o usuário já existir...
+      // Se já existir usuário com o novo email solicitado...
       if (userExists) {
         return res.status(400).json({ error: 'User alredy exists.' });
       }

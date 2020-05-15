@@ -8,6 +8,12 @@ class File extends Model {
       {
         name: Sequelize.STRING,
         path: Sequelize.STRING,
+        url: {
+          type: Sequelize.VIRTUAL, // Campo inexistente no Banco de Dados.
+          get() {
+            return 'qualquer coisa';
+          },
+        },
       },
       {
         sequelize,

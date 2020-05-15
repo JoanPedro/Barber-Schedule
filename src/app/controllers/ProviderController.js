@@ -16,7 +16,7 @@ class ProviderController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['name', 'path'], // Retorna somente name e path do model File.
+          attributes: ['name', 'path', 'url'], // Retorna somente name e path do model File.
         },
       ],
     });

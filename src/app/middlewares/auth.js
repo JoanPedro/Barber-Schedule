@@ -27,7 +27,7 @@ export default async (req, res, next) => {
     usuário pro jwt.sign, o decoded  vai possuir dentro dele (Objeto) o ID
     passado. */
 
-    req.userId = decoded.id;
+    req.userId = decoded.id; // Retorna o ID do usuário autorizado.
 
     return next();
   } catch (error) {

@@ -10,7 +10,7 @@ module.exports = {
         e a chave que é o ID da tabela files. Ou seja, todo avatar_id da tabela-
         usuários será também um ID contido na tabela files. */
         references: { model: 'files', key: 'id' }, // Foreign Key.
-        onUpdate: 'CASCADE', // Se o avatar_id for atulizado, atualize tb na tabela usuários.
+        onUpdate: 'CASCADE', // Se o id for atulizado, atualize tb na tabela user.
         onDelete: 'SET NULL', // Se deletado, diga que é nulo.
         allowNull: true,
       }

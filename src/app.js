@@ -1,4 +1,5 @@
 import express from 'express'; // Só é possível utilizar isso adicionando como
+import path from 'path';
 import routes from './routes'; // dependencias o sucrase. " Yarn add sucrase -D "
 // Deve-se criar o arquivo nodemon.js e configuralo para aceitar JS sucrase!
 // Configuração Inicial da Aplicação: Define os Middlewares e Rotas.
@@ -15,6 +16,13 @@ class App {
 
   middlewares() {
     this.server.use(express.json()); // Habilita Requisição Body em JSON.
+
+    /* Estático: Servem arquivos estáticos como html, imagens... arquivos
+    processados diretamente pelo navegador. */
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+    );
   }
 
   routes() {

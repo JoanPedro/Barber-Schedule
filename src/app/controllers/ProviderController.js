@@ -11,7 +11,13 @@ class ProviderController {
       attributes: ['id', 'name', 'email', 'avatar_id'],
 
       // Inclue o retono das informações do Relacionamento com o model File.
-      include: [{ model: File }],
+      // Chama pelo codinome 'avatar', definido no model User.
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
     });
 
     return res.json(providers);

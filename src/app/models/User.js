@@ -32,7 +32,8 @@ class User extends Model {
   /* Pertence à User, transforma-o em uma coluna avatar_id. Cria um relacionamento
   com o model File. */
   static associate(models) {
-    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+    // 'as' = Codinome. Substitui "File" que é o nome do model pelo nome: "avatar"
+    this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 
   checkPassword(password) {

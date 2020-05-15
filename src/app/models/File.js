@@ -11,7 +11,9 @@ class File extends Model {
         url: {
           type: Sequelize.VIRTUAL, // Campo inexistente no Banco de Dados.
           get() {
-            return 'qualquer coisa';
+            // Retorna a partir de uma chamada get().
+            // Retorna a url da imagem a partir do seu path (caminho/nome)
+            return `http://localhost:3333/files/${this.path}`;
           },
         },
       },

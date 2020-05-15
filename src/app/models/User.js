@@ -29,6 +29,12 @@ class User extends Model {
     return this;
   }
 
+  /* Pertence à User, transforma-o em uma coluna avatar_id. Cria um relacionamento
+  com o model File. */
+  static associate(models) {
+    this.belongsTo(models.File, { foreignKey: 'avatar_id' });
+  }
+
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
     /* password: Digitado e this.password_hash é a senha

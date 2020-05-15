@@ -1,11 +1,24 @@
 // Middleware utilizado na rota /users para criação de usuários.
+import * as Yup from 'yup'; // Como não possui nenhum export default...
 
 import User from '../models/User'; // Importa o Model padrão de Usuário.
 
 class UserController {
-  // Método Store para Criação de usuários.
-  // Sempre utilizar async e await quanto for manipulações com banco de dados.
   async store(req, res) {
+    /* Utiliza-se o Yup como Validação de dados. De acordo com o Model e o que o
+      Usuário irá informar. */
+    const schema = Yup.object().shape({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+      password: Yup.string().required().min(6),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
+
+    // Método Store para Criação de usuários.
+    // Sempre utilizar async e await quanto for manipulações com banco de dados.
     const userInfo = req.body;
     // Verifica a existência do usuário pelo email, já que foi definido como único.
     const userExists = await User.findOne({ where: { email: userInfo.email } });
@@ -30,6 +43,30 @@ class UserController {
   }
 
   async update(req, res) {
+    /* Utiliza-se o Yup como Validação de dados. De acordo com o Model e o que o
+      Usuário irá informar. */
+    const schema = Yup.object().shape({
+      name: Yup.string(),
+      email: Yup.string().email(),
+      oldPassword: Yup.string().min(6),
+      password: Yup.string()
+        .min(6)
+        .when('oldPassword', (oldPassword, field) =>
+          oldPassword ? field.required() : field
+        ) /* Se o oldPassword for informado, torna o campo password required. O
+          Condicional informa se: oldPassword foi informado? Torne o campo reque-
+          rido, caso não informado, simplesmente pule para o próximo campo */,
+      confirmPassword: Yup.string().when('password', (password, field) =>
+        password ? field.required().oneOf([Yup.ref('password')]) : field
+      ) /* Validação se a senha está sendo inserida é realmente a que o usuário
+        deseja. Fazedo o confirmPassword se referir para o oldPassword, e veri-
+        ficar se o password é igual ao confirmPassword. */,
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails!' });
+    }
+
     const { email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);

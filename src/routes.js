@@ -6,8 +6,10 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 // Importa o Controller de sessão.
 import SessionController from './app/controllers/SessionController';
-// Importa o Middleware de Autorização.
+// Importa o Middleware de Autorização e Agendamento
 import authMiddleware from './app/middlewares/auth';
+import AppointmentController from './app/controllers/AppointmentController';
+
 // Importa o Controller de Upload de arquivos.
 import FileController from './app/controllers/FileController';
 // Importa o Controller de Prestadores de Serviços.
@@ -29,6 +31,9 @@ routes.put('/users', authMiddleware, UserController.update);
 // ------------------------ Sessão de Autenticação --------------------------- //
 // Registra o Controller para fazer o Sign in na aplicação -> SessionController.
 routes.post('/sessions', SessionController.store);
+// ------------------------ Sessão de Agendamento -----------------------------//
+// Registra o Controle para fazer o agendamento na aplicação -> AppointmentController.
+routes.post('/appointments', AppointmentController.store);
 // --------------------------------------------------------------------------- //
 
 // ------------------------- Rota Upload de Arquivos ------------------------- //

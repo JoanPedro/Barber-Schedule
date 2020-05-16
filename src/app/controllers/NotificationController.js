@@ -24,6 +24,22 @@ class NotificationController {
 
     return res.json(notifications);
   }
+
+  async update(req, res) {
+    // const notification = await Notification.findById(req.params.id);
+    // Método Mongoose -> Encontra e já atualiza.
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      {
+        read: true, // Usuário leu a notificação.
+      },
+      // Depois de atualizar, retornará a resposta.
+      // Se false, ele atualiza o registro mas n retorna a resposta atualizada.
+      { new: true }
+    );
+
+    return res.json(notification);
+  }
 }
 
 export default new NotificationController();

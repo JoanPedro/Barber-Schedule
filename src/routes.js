@@ -57,4 +57,5 @@ routes.get('/providers', authMiddleware, ProviderController.index);
 
 // ------------------------ Notificações de Serviços ------------------------- //
 routes.get('/notifications', authMiddleware, NotificationController.index);
+routes.put('/notifications/:id', authMiddleware, NotificationController.update);
 export default routes;

@@ -10,12 +10,13 @@ import SessionController from './app/controllers/SessionController';
 import authMiddleware from './app/middlewares/auth';
 import AppointmentController from './app/controllers/AppointmentController';
 import ScheduleController from './app/controllers/ScheduleController';
-
 // Importa o Controller de Upload de arquivos.
 import FileController from './app/controllers/FileController';
 // Importa o Controller de Prestadores de Serviços.
 // OBS. Apesar de ser também um usuário, a entidade é outra.
 import ProviderController from './app/controllers/ProviderController';
+// Importa o Controller responsável pelas Notificações aos Providers.
+import NotificationController from './app/controllers/NotificationController';
 
 const routes = new Router(); // Cria uma nova instância de Router do Express.
 const upload = multer(multerConfig);
@@ -53,4 +54,7 @@ routes.post(
 // ------------------------- Prestadores de Serviço -------------------------- //
 // Regista o Controller de Prestadores de Serviço () -> ProviderController.
 routes.get('/providers', authMiddleware, ProviderController.index);
+
+// ------------------------ Notificações de Serviços ------------------------- //
+routes.get('/notifications', authMiddleware, NotificationController.index);
 export default routes;

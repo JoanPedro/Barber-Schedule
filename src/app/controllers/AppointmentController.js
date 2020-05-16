@@ -60,11 +60,11 @@ class AppointmentController {
     const { provider_id, date } = req.body;
 
     // Verifica se o provider_id é realmente de um Provider.
-    const isProvider = await User.findOne({
+    const checkIsProvider = await User.findOne({
       where: { id: provider_id, provider: true },
     });
 
-    if (!isProvider) {
+    if (!checkIsProvider) {
       return res
         .status(401)
         .json({ error: 'You can only create appointments with providers.' });
@@ -99,6 +99,12 @@ class AppointmentController {
       provider_id,
       date: hourStart, // Não permite horário quebrado. Sempre de 1 em 1 hora.
     });
+
+    if (appointment.user_id === provider_id) {
+      return res
+        .status(400)
+        .json({ error: 'You cannot appointment with yourself.' });
+    }
 
     // Realizar a notificação de agendamento para o prestador de serviços.
     const user = await User.findByPk(req.userId);

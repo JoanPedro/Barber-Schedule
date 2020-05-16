@@ -29,6 +29,7 @@ class Database {
       );
   }
 
+  // MongoDB para armazenar notificações que serão enviadas para o prestador de serviços.
   mongo() {
     this.mongoConnection = mongoose.connect(
       'mongodb://localhost:27017/gobarber',

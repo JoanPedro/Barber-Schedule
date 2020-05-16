@@ -2,10 +2,11 @@ import File from '../models/File';
 
 class FileController {
   async store(req, res) {
-    // O Multer implanta dentro da requisição o atributo file.
+    /* O Multer quando chamado ( get() ) disponibiliza dentro da requisição o
+    atributo 'file', e dentro de file existe originalname e filename. */
     const { originalname: name, filename: path } = req.file;
 
-    // Método Store para Criação de Arquivos dentro do DB.
+    // Método Create para Criação de Arquivos dentro do DB a partir do Model File.
     // Sempre utilizar async e await quanto for manipulações com banco de dados.
     const file = await File.create({
       name,

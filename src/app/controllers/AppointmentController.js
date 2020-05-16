@@ -6,10 +6,20 @@ import Appointment from '../models/Appointment';
 
 class AppointmentController {
   async index(req, res) {
+    // --------------- Paginação --------------- //
+    const { page } = req.query; // Por padrão: 1.
+
+    // --------------- Listagem --------------- //
     const appointments = await Appointment.findAll({
       // Retorna todos os agendamentos validados e não cancelados.
       where: { user_id: req.userId, canceled_at: null },
       order: ['date'], // Ordena por data.
+      limit: 20, // Listar no máximo 20 registros. 'Paginação'
+
+      /* Como o padrão de page, no req.query é igual a 1, não pula nenhum dado,
+      se tiver na página 2, pulará 20 dados... se tiver na página n, pulará n*10
+      dados. */
+      offset: (page - 1) * 20,
       attributes: ['id', 'date'],
       include: [
         /* Duplo Include de Relacionamento -> Inclui do model User, os providers e

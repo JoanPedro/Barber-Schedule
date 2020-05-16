@@ -10,7 +10,7 @@ class ProviderController {
       // Retorna todos os usuários onde provider = true
       where: { provider: true },
 
-      // Retorna somente estas informações listadas.
+      // Faz com que retorne somente estas informações listadas.
       attributes: ['id', 'name', 'email', 'avatar_id'],
 
       // Inclue o retono das informações do Relacionamento com o model File.
@@ -19,7 +19,10 @@ class ProviderController {
         {
           model: File,
           as: 'avatar',
-          attributes: ['name', 'path', 'url'], // Retorna somente name e path do model File.
+          // Retorna somente name e path do model File.
+          /* Como a url depende da variável 'path', é obrigatório incluir o
+          retorno de 'path'. */
+          attributes: ['name', 'path', 'url'],
         },
       ],
     });

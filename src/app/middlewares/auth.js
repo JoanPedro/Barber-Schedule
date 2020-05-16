@@ -29,7 +29,7 @@ export default async (req, res, next) => {
 
     req.userId = decoded.id; // Retorna o ID do usuário autorizado.
 
-    return next();
+    return next(); // Por ser um middleware, é necessário para executar o Controller.
   } catch (error) {
     return res.status(401).json({ error: 'Token invalid!' });
   }

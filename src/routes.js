@@ -9,6 +9,7 @@ import SessionController from './app/controllers/SessionController';
 // Importa o Middleware de Autorização e Agendamento
 import authMiddleware from './app/middlewares/auth';
 import AppointmentController from './app/controllers/AppointmentController';
+import ScheduleController from './app/controllers/ScheduleController';
 
 // Importa o Controller de Upload de arquivos.
 import FileController from './app/controllers/FileController';
@@ -35,6 +36,8 @@ routes.post('/sessions', SessionController.store);
 // Registra o Controle para fazer o agendamento na aplicação -> AppointmentController.
 routes.get('/appointments', authMiddleware, AppointmentController.index);
 routes.post('/appointments', authMiddleware, AppointmentController.store);
+// ---------------------- Sessão de Agenda do Prestador -----------------------//
+routes.get('/schedule', authMiddleware, ScheduleController.index);
 // --------------------------------------------------------------------------- //
 
 // ------------------------- Rota Upload de Arquivos ------------------------- //

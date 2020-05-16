@@ -1,9 +1,38 @@
 import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore } from 'date-fns';
 import User from '../models/User';
+import File from '../models/File';
 import Appointment from '../models/Appointment';
 
 class AppointmentController {
+  async index(req, res) {
+    const appointments = await Appointment.findAll({
+      // Retorna todos os agendamentos validados e não cancelados.
+      where: { user_id: req.userId, canceled_at: null },
+      order: ['date'], // Ordena por data.
+      attributes: ['id', 'date'],
+      include: [
+        /* Duplo Include de Relacionamento -> Inclui do model User, os providers e
+        Inclui também do model File a imagem uploaded a partir dos providers. */
+        // Inclui os dados relacionados do usuário que é Provider.
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File, // Inclui os dados relacionados com a Imagem Uploaded.
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+      ],
+    });
+
+    return res.json(appointments);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       provider_id: Yup.number().required(),

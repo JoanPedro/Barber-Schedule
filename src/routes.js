@@ -33,15 +33,21 @@ routes.put('/users', authMiddleware, UserController.update);
 routes.post('/sessions', SessionController.store);
 // ------------------------ Sessão de Agendamento -----------------------------//
 // Registra o Controle para fazer o agendamento na aplicação -> AppointmentController.
-routes.post('/appointments', AppointmentController.store);
+routes.get('/appointments', authMiddleware, AppointmentController.index);
+routes.post('/appointments', authMiddleware, AppointmentController.store);
 // --------------------------------------------------------------------------- //
 
 // ------------------------- Rota Upload de Arquivos ------------------------- //
 // Rota para Upload de arquivos, com Controller (store) -> FileController.
-routes.post('/files', upload.single('file'), FileController.store);
+routes.post(
+  '/files',
+  authMiddleware,
+  upload.single('file'),
+  FileController.store
+);
 // --------------------------------------------------------------------------- //
 
 // ------------------------- Prestadores de Serviço -------------------------- //
 // Regista o Controller de Prestadores de Serviço () -> ProviderController.
-routes.get('/providers', ProviderController.index);
+routes.get('/providers', authMiddleware, ProviderController.index);
 export default routes;

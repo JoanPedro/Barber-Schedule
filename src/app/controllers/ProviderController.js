@@ -1,3 +1,6 @@
+/* É uma nova entidade, mas não deixa de ser um Usuário. Criado por não ser
+possível a existência de dois métodos Store, Index... */
+
 import User from '../models/User';
 import File from '../models/File';
 

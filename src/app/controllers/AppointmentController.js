@@ -4,7 +4,7 @@ import pt from 'date-fns/locale/pt';
 
 import Appointment from '../models/Appointment';
 import File from '../models/File';
-import Mail from '../../lib/mail';
+import Mail from '../../lib/Mail';
 import Notification from '../schemas/Notification';
 import User from '../models/User';
 
@@ -135,6 +135,11 @@ class AppointmentController {
           as: 'provider',
           attributes: ['name', 'email'],
         },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name'],
+        },
       ],
     });
 
@@ -169,7 +174,15 @@ class AppointmentController {
       // Rementente e Destinatário.
       to: `${appointment.provider.name} <${appointment.provider.email}>`,
       subject: 'Agendamento cancelado!',
-      text: 'Você tem um novo cancelamento.',
+      template: 'cancellation', // Template utilizado no views/email
+      // Todas as variáveis que serão utilizadas nos vies/email.
+      context: {
+        provider: appointment.provider.name,
+        user: appointment.user.name,
+        date: format(appointment.date, "'dia' dd 'de' MMMM', às' H:mm'h'", {
+          locale: pt,
+        }),
+      },
     });
 
     return res.json(appointment);

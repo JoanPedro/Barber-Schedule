@@ -37,6 +37,11 @@ routes.post('/sessions', SessionController.store);
 // Registra o Controle para fazer o agendamento na aplicação -> AppointmentController.
 routes.get('/appointments', authMiddleware, AppointmentController.index);
 routes.post('/appointments', authMiddleware, AppointmentController.store);
+routes.delete(
+  '/appointments/:id',
+  authMiddleware,
+  AppointmentController.delete
+);
 // ---------------------- Sessão de Agenda do Prestador -----------------------//
 routes.get('/schedule', authMiddleware, ScheduleController.index);
 // --------------------------------------------------------------------------- //

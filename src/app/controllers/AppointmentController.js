@@ -4,6 +4,7 @@ import pt from 'date-fns/locale/pt';
 
 import Appointment from '../models/Appointment';
 import File from '../models/File';
+import Mail from '../../lib/mail';
 import Notification from '../schemas/Notification';
 import User from '../models/User';
 
@@ -126,7 +127,16 @@ class AppointmentController {
 
   async delete(req, res) {
     // Busca dados dos agendamentos
-    const appointment = await Appointment.findByPk(req.params.id);
+    const appointment = await Appointment.findByPk(req.params.id, {
+      // Inclui as informações de Relacionamento de Appointment com User (Provider).
+      include: [
+        {
+          model: User,
+          as: 'provider',
+          attributes: ['name', 'email'],
+        },
+      ],
+    });
 
     // Verifica se o usuário do agendamento é diferente do usuário autenticado.
     if (appointment.user_id !== req.userId) {
@@ -153,7 +163,14 @@ class AppointmentController {
     }
 
     appointment.canceled_at = new Date(); // Horário exato do cancelamento.
+
     await appointment.save();
+    await Mail.sendMail({
+      // Rementente e Destinatário.
+      to: `${appointment.provider.name} <${appointment.provider.email}>`,
+      subject: 'Agendamento cancelado!',
+      text: 'Você tem um novo cancelamento.',
+    });
 
     return res.json(appointment);
   }

@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import { isBefore, subHours } from 'date-fns';
 
 // Classe modelo de Usuários.
 class Appointment extends Model {
@@ -8,6 +9,22 @@ class Appointment extends Model {
       {
         date: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
+        past: {
+          type: Sequelize.VIRTUAL,
+          // Verifica se a data do lançamento é anterior à data atual.
+          get() {
+            return isBefore(this.date, new Date());
+          },
+        },
+        cancelable: {
+          type: Sequelize.VIRTUAL,
+          // Retorna a resposta se um agendamento é cancelável ou não.
+          /* Existe uma regra de negócio que um agendamento só poderá ser
+          cancelado pelo menos duas horas antes do agendado. */
+          get() {
+            return isBefore(new Date(), subHours(this.date, 2));
+          },
+        },
       },
       {
         sequelize,

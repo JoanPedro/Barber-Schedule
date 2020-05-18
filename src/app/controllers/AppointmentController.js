@@ -26,7 +26,7 @@ class AppointmentController {
       se tiver na página 2, pulará 20 dados... se tiver na página n, pulará n*10
       dados. */
       offset: (page - 1) * 20,
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable'],
       include: [
         /* Duplo Include de Relacionamento -> Inclui do model User, os providers e
         Inclui também do model File a imagem uploaded a partir dos providers. */

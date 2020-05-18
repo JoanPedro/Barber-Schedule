@@ -15,6 +15,7 @@ import FileController from './app/controllers/FileController';
 // Importa o Controller de Prestadores de Serviços.
 // OBS. Apesar de ser também um usuário, a entidade é outra.
 import ProviderController from './app/controllers/ProviderController';
+import AvailableController from './app/controllers/AvailableController';
 // Importa o Controller responsável pelas Notificações aos Providers.
 import NotificationController from './app/controllers/NotificationController';
 
@@ -59,6 +60,11 @@ routes.post(
 // ------------------------- Prestadores de Serviço -------------------------- //
 // Regista o Controller de Prestadores de Serviço () -> ProviderController.
 routes.get('/providers', authMiddleware, ProviderController.index);
+routes.get(
+  '/providers/:providerId/available',
+  authMiddleware,
+  AvailableController.index
+);
 
 // ------------------------ Notificações de Serviços ------------------------- //
 routes.get('/notifications', authMiddleware, NotificationController.index);

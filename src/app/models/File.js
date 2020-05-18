@@ -13,7 +13,7 @@ class File extends Model {
           get() {
             // Retorna a partir de uma chamada get().
             // Retorna a url da imagem a partir do seu path (caminho/nome)
-            return `http://localhost:3333/files/${this.path}`;
+            return `${process.env.APP_URL}/files/${this.path}`;
           },
         },
       },

@@ -31,14 +31,11 @@ class Database {
 
   // MongoDB para armazenar notificações que serão enviadas para o prestador de serviços.
   mongo() {
-    this.mongoConnection = mongoose.connect(
-      'mongodb://localhost:27017/gobarber',
-      {
-        useNewUrlParser: true,
-        useFindAndModify: true,
-        useUnifiedTopology: true,
-      }
-    );
+    this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useFindAndModify: true,
+      useUnifiedTopology: true,
+    });
   }
 }
 
